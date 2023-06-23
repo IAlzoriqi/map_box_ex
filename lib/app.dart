@@ -137,7 +137,7 @@ class _SampleNavigationAppState extends State<SampleNavigationApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('ماب بوكس'),
         ),
         body: Center(
           child: Column(children: <Widget>[
