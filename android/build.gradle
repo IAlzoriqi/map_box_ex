@@ -1,0 +1,101 @@
+//buildscript {
+//    ext.kotlin_version = '1.7.10'
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//
+//    dependencies {
+//        classpath 'com.android.tools.build:gradle:7.3.0'
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//    }
+//}
+//
+//allprojects {
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//}
+//
+//rootProject.buildDir = '../build'
+//subprojects {
+//    project.buildDir = "${rootProject.buildDir}/${project.name}"
+//}
+//subprojects {
+//    project.evaluationDependsOn(':app')
+//}
+//
+//tasks.register("clean", Delete) {
+//    delete rootProject.buildDir
+//}
+buildscript {
+    ext.kotlin_version = '1.7.10'
+    repositories {
+//        google()
+//        mavenCentral()
+        google()
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+
+
+
+        mavenCentral()
+        maven { url 'https://mapbox.bintray.com/mapbox' }
+
+
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                // Do not change the username below.
+                // This should always be `mapbox` (not your username).
+                username = 'mapbox'
+                // Use the secret token you stored in gradle.properties as the password
+                password = project.properties['sk.eyJ1Ijoic2FmYXJieWNhbGxtZSIsImEiOiJjbGo3dXlkNjEwa2Z4M2RxeGR4MGs5ZjUyIn0.Pq2o3aQu_amSjLCzGOViJg'] ?: "sk.eyJ1Ijoic2FmYXJieWNhbGxtZSIsImEiOiJjbGo3dXlkNjEwa2Z4M2RxeGR4MGs5ZjUyIn0.Pq2o3aQu_amSjLCzGOViJg"
+            }
+        }
+
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                // Do not change the username below.
+                // This should always be `mapbox` (not your username).
+                username = 'mapbox'
+                // Use the secret token you stored in gradle.properties as the password
+
+                password = project.properties['sk.eyJ1Ijoic2FmYXJieWNhbGxtZSIsImEiOiJjbGo3dXlkNjEwa2Z4M2RxeGR4MGs5ZjUyIn0.Pq2o3aQu_amSjLCzGOViJg'] ?: "pk.eyJ1IjoiaWFsem9yaXFpMjAyMCIsImEiOiJja3BnMTNoaTcwb3RyMnBvNHViZ2JsbmtxIn0.JCrq4L11Fgk0Ke5gJ3O8YA"
+            }
+        }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
