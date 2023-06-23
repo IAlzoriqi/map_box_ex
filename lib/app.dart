@@ -59,7 +59,46 @@ class _SampleNavigationAppState extends State<SampleNavigationApp> {
   bool _isNavigating = false;
   bool _inFreeDrive = false;
   late MapBoxOptions _navigationOption;
+  MapBoxOptions mapBoxOptions= MapBoxOptions(
+  // initialLatitude: 36.1175275,
+  // initialLongitude: -115.1839524,
 
+      zoom: 15.0,
+      tilt: 0.0,
+      bearing: 0.0,
+      enableRefresh: false,
+      // enableFreeDriveMode: true,
+  // zoom: 13.0,
+  // tilt: 0.0,
+      alternatives: true,
+
+      voiceInstructionsEnabled: true,
+
+      bannerInstructionsEnabled: true,
+      allowsUTurnAtWayPoints: true,
+      mode: MapBoxNavigationMode.drivingWithTraffic,
+      // units: VoiceUnits.imperial,
+      simulateRoute: false,
+      animateBuildRoute: true,
+      showEndOfRouteFeedback: true,
+      showReportFeedbackButton: true,
+
+      units: VoiceUnits.imperial,
+      longPressDestinationEnabled: true,
+  // bearing: 0.0,
+  // enableRefresh: false,
+
+  // alternatives: true,
+  // voiceInstructionsEnabled: true,
+  // bannerInstructionsEnabled: true,
+  // allowsUTurnAtWayPoints: true,
+  // mode: MapBoxNavigationMode.drivingWithTraffic,
+  // mapStyleUrlDay: "https://url_to_day_style",
+  // mapStyleUrlNight: "https://url_to_night_style",
+  // units: VoiceUnits.imperial,
+  // simulateRoute: true,
+  // isOptimized: ,
+  language: "ar");
   @override
   void initState() {
     super.initState();
@@ -72,7 +111,7 @@ class _SampleNavigationAppState extends State<SampleNavigationApp> {
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-
+     MapBoxNavigation.instance.setDefaultOptions(mapBoxOptions);
     _navigationOption = MapBoxNavigation.instance.getDefaultOptions();
     _navigationOption.simulateRoute = true;
     //_navigationOption.initialLatitude = 36.1175275;
@@ -152,12 +191,14 @@ class _SampleNavigationAppState extends State<SampleNavigationApp> {
 
                             MapBoxNavigation.instance.startNavigation(
                                 wayPoints: wayPoints,
-                                options: MapBoxOptions(
-                                    mode: MapBoxNavigationMode.driving,
-                                    simulateRoute: true,
-                                    language: "en",
-                                    allowsUTurnAtWayPoints: true,
-                                    units: VoiceUnits.metric));
+                                // options: MapBoxOptions(
+                                //     mode: MapBoxNavigationMode.driving,
+                                //     simulateRoute: true,
+                                //     language: "شب",
+                                //     allowsUTurnAtWayPoints: true,
+                                //     units: VoiceUnits.metric)
+                            options: mapBoxOptions
+                            );
                             //after 10 seconds add a new stop
                             await Future.delayed(const Duration(seconds: 10));
                             var stop = WayPoint(
@@ -175,7 +216,9 @@ class _SampleNavigationAppState extends State<SampleNavigationApp> {
                         ElevatedButton(
                           child: const Text("Free Drive"),
                           onPressed: () async {
-                            await MapBoxNavigation.instance.startFreeDrive();
+                            await MapBoxNavigation.instance.startFreeDrive(
+                                options: mapBoxOptions
+                            );
                           },
                         ),
                       ],
@@ -244,7 +287,7 @@ class _SampleNavigationAppState extends State<SampleNavigationApp> {
                           ? null
                           : () async {
                               _inFreeDrive =
-                                  await _controller?.startFreeDrive() ?? false;
+                                  await _controller?.startFreeDrive(options:mapBoxOptions) ?? false;
                             },
                       child: const Text("Free Drive "),
                     ),
